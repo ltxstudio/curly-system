@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Layout from '../../components/Layout';
 import TextArea from '../../components/TextArea';
 import Button from '../../components/Button';
-import cleanCSS from 'clean-css';
+import { minify } from 'csso';
 
 export default function CssMinifier() {
   const [input, setInput] = useState('');
@@ -14,8 +14,8 @@ export default function CssMinifier() {
   const handleMinify = () => {
     try {
       setError('');
-      const result = new cleanCSS({}).minify(input);
-      setOutput(result.styles || 'Error minifying CSS');
+      const result = minify(input);
+      setOutput(result.css || 'Error minifying CSS');
     } catch (e: any) {
       setError(e.message);
     }
